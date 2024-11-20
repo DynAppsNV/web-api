@@ -4,6 +4,7 @@
 from contextlib import contextmanager
 
 import odoo
+from odoo.modules.registry import Registry
 from odoo.tools import mute_logger
 
 from ..registry import EndpointRegistry
@@ -14,7 +15,7 @@ from .fake_controllers import CTRLFake
 @contextmanager
 def new_rollbacked_env():
     # Borrowed from `component`
-    registry = odoo.registry(odoo.tests.common.get_db_name())
+    registry = Registry(odoo.tests.common.get_db_name())
     uid = odoo.SUPERUSER_ID
     cr = registry.cursor()
     try:

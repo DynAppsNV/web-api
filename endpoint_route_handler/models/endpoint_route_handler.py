@@ -4,7 +4,7 @@
 
 import logging
 
-from odoo import _, api, exceptions, fields, models
+from odoo import api, exceptions, fields, models
 
 ENDPOINT_ROUTE_CONSUMER_MODELS = {
     # by db
@@ -79,7 +79,7 @@ class EndpointRouteHandler(models.AbstractModel):
                 clashing_models.append(model)
         if clashing_models:
             raise exceptions.UserError(
-                _(
+                self.env._(
                     "Non unique route(s): %(routes)s.\n"
                     "Found in model(s): %(models)s.\n"
                 )
@@ -176,7 +176,7 @@ class EndpointRouteHandler(models.AbstractModel):
         for rec in self:
             if rec.route in self._blacklist_routes:
                 raise exceptions.UserError(
-                    _("`%(name)s` uses a blacklisted routed = `%(route)s`")
+                    self.env._("`%(name)s` uses a blacklisted routed = `%(route)s`")
                     % {"name": rec.name, "route": rec.route}
                 )
 
@@ -185,7 +185,7 @@ class EndpointRouteHandler(models.AbstractModel):
         for rec in self:
             if rec.request_method in ("POST", "PUT") and not rec.request_content_type:
                 raise exceptions.UserError(
-                    _("Request content type is required for POST and PUT.")
+                    self.env._("Request content type is required for POST and PUT.")
                 )
 
     def _prepare_endpoint_rules(self, options=None):
@@ -247,5 +247,6 @@ class EndpointRouteHandler(models.AbstractModel):
             methods=[self.request_method],
             routes=[route],
             csrf=self.csrf,
+            readonly=True,
         )
         return route, routing, self.endpoint_hash

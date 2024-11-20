@@ -169,6 +169,7 @@ Contributors
 
 -  Simone Orsi <simone.orsi@camptocamp.com>
 -  Nguyen Minh Chien <chien@trobz.com>
+-  Bert Van Groenendael <bert.vangroenendael@dynapps.eu>
 
 Maintainers
 -----------
